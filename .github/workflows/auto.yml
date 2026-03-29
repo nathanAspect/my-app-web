@@ -1,0 +1,27 @@
+name: Auto Commit Bot
+
+on:
+  schedule:
+    - cron: "0 * * * *"   # every hour
+  workflow_dispatch:      # allows manual trigger
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Git
+        run: |
+          git config user.name "commit-bot"
+          git config user.email "bot@example.com"
+
+      - name: Run script
+        run: python script.py
+
+      - name: Push changes
+        run: |
+          git pull
+          git push
